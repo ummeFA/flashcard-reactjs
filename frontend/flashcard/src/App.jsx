@@ -1,7 +1,14 @@
-import "./App.css";
-
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import Card from "../src/components/Card";
 function App() {
-  return <div className="">Flashcard</div>;
+  return (
+    <div>
+      <Routes>
+        <Route path="/" element={<Card />} />
+      </Routes>
+    </div>
+  );
 }
 
 export default App;
