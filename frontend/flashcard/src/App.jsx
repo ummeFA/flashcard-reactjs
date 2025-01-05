@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Card from "../src/components/Card";
 import AddVocabulary from "./components/AddVocabulary";
 import Navbar from "./components/Navbar";
+import Menu from "./components/Menu";
 function App() {
   return (
     <div className="flex flex-col h-screen">
@@ -11,6 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Card />} />
           <Route path="/add-vocabulary" element={<AddVocabulary />} />
+          <Route path="/menu" element={<Menu />} />
         </Routes>
       </div>
     </div>

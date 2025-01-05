@@ -53,15 +53,6 @@ const Card = () => {
   return (
     <div className="flex items-center justify-center w-full h-screen">
       <div className="space-y-4 ">
-        {/* Add data button */}
-        <div className="">
-          <button onClick={addVocabulary}>
-            <FontAwesomeIcon
-              icon={faAdd}
-              className="bg-orange-700 text-white p-3 border border-black rounded-xl"
-            />
-          </button>
-        </div>
         <div
           className={`relative w-96 h-64 cursor-pointer transform transition-transform duration-500`}
           style={{
