@@ -4,6 +4,7 @@ import Card from "../src/components/Card";
 import AddVocabulary from "./components/AddVocabulary";
 import Navbar from "./components/Navbar";
 import Menu from "./components/Menu";
+import { ToastContainer } from "react-toastify";
 function App() {
   return (
     <div className="flex flex-col h-screen">
@@ -15,6 +16,7 @@ function App() {
           <Route path="/menu" element={<Menu />} />
         </Routes>
       </div>
+      <ToastContainer />
     </div>
   );
 }

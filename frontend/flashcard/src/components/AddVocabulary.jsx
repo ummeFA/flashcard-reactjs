@@ -3,9 +3,15 @@ import { faChevronCircleLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useDatabaseStore } from "../../../../backend/databaseStore";
 
 const AddVocabulary = () => {
   const navigate = useNavigate();
+  const [isSaving, setIsSaving] = useState(false);
+  // Accessing Zustand store's addVocabulary function
+  const addVocabulary = useDatabaseStore((state) => state.addVocabulary);
 
   // Vocabulary state
   const [newKanji, setNewKanji] = useState("");
@@ -13,14 +19,39 @@ const AddVocabulary = () => {
   const [newEnglish, setNewEnglish] = useState("");
 
   const handleSave = async () => {
-    const data = { newKanji, newHiragana, newEnglish };
+    // To prevent duplicate submission
+    if (isSaving) return;
+    setIsSaving(true);
+
+    const data = {
+      kanji: newKanji,
+      hiragana: newHiragana,
+      english: newEnglish,
+    };
+
+    try {
+      await addVocabulary(data);
+      toast.success("Vocabulary Successfully saved!", {
+        position: "bottom-right",
+      });
+      // Resetting the input field to empty
+      setNewKanji("");
+      setNewHiragana("");
+      setNewEnglish("");
+      navigate(-1);
+    } catch (error) {
+      console.error("Error saving data: ", error);
+      toast.error("Failed to save data", { position: "bottom-right" });
+    }
   };
 
   const previousPage = () => {
     navigate(-1);
   };
+
   return (
     <div className="flex flex-col justify-center items-center bg-gray-100 bg-cover h-screen">
+      <ToastContainer />
       <p className="font-bold text-3xl mb-5">Add new Vocab</p>
       <div className="flex flex-col text-xl w-2/3">
         <input
@@ -59,7 +90,10 @@ const AddVocabulary = () => {
           />
           <span className="hidden md:block ml-2 text-xl"> Save</span>
         </button>
-        <button className="bg-blue-600 text-white flex items-center justify-center p-3 border rounded-lg w-full md:w-1/2 hover:bg-blue-800">
+        <button
+          onClick={previousPage}
+          className="bg-blue-600 text-white flex items-center justify-center p-3 border rounded-lg w-full md:w-1/2 hover:bg-blue-800"
+        >
           <FontAwesomeIcon
             icon={faChevronCircleLeft}
             className="text-xl md:text-2xl"
