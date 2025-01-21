@@ -23,6 +23,12 @@ const AddVocabulary = () => {
     if (isSaving) return;
     setIsSaving(true);
 
+    // Validation for empty fields
+    if (!newKanji || !newHiragana || !newEnglish) {
+      toast.error("Please fill in all fields.", { position: "top-right" });
+      return;
+    }
+
     const data = {
       kanji: newKanji,
       hiragana: newHiragana,
@@ -32,7 +38,7 @@ const AddVocabulary = () => {
     try {
       await addVocabulary(data);
       toast.success("Vocabulary Successfully saved!", {
-        position: "bottom-right",
+        position: "top-right",
       });
       // Resetting the input field to empty
       setNewKanji("");
