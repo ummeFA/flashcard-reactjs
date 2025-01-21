@@ -1,17 +1,34 @@
 import React, { useEffect } from "react";
 import { useDatabaseStore } from "../../../../backend/databaseStore"; // Import Zustand store
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const ShowList = () => {
   const { data, isLoading, fetchData } = useDatabaseStore(); // Access Zustand store
+  const navigate = useNavigate();
 
   // Fetch data when the component mounts
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
+  // Back to previous page
+  const previousPage = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Vocabulary List</h1>
+      <div className="flex justify-between mb-4">
+        <h1 className="text-2xl font-bold mb-4">Vocabulary List</h1>
+        <button
+          className="bg-blue-600 text-white p-3 border rounded-lg"
+          onClick={previousPage}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} className="mr-2" /> Back
+        </button>
+      </div>
       {isLoading ? (
         <p className="text-gray-500">Loading...</p>
       ) : (

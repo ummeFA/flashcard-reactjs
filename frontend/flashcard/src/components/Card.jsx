@@ -63,7 +63,7 @@ const Card = () => {
         >
           {/* Front */}
           <div
-            className={`absolute w-full h-full bg-red-300 border rounded-lg flex items-center justify-center`}
+            className={`absolute w-full h-full bg-blue-300 border rounded-lg flex items-center justify-center`}
             style={{
               backfaceVisibility: "hidden",
             }}
@@ -74,7 +74,7 @@ const Card = () => {
           </div>
           {/* Back */}
           <div
-            className={`absolute w-full h-full bg-green-800 border rounded-lg flex items-center justify-center`}
+            className={`absolute w-full h-full bg-blue-600 border rounded-lg flex items-center justify-center`}
             style={{
               backfaceVisibility: "hidden",
               transform: "rotateY(180deg)",
@@ -89,18 +89,24 @@ const Card = () => {
           </div>
         </div>
         {/* Buttons */}
-        <div className="flex justify-between">
+        <div className="flex justify-between space-x-4">
           <button
-            className="bg-blue-700 p-5 border rounded-l-2xl"
+            className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-r from-green-500 to-green-700 shadow-lg hover:from-green-600 hover:to-green-800 hover:shadow-xl transition-all duration-300 ease-in-out"
             onClick={handlePrevious}
           >
-            <FontAwesomeIcon icon={faChevronLeft} className="text-white" />{" "}
+            <FontAwesomeIcon
+              icon={faChevronLeft}
+              className="text-white text-lg"
+            />
           </button>
           <button
-            className="bg-blue-700 p-5 border rounded-r-2xl"
+            className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-r from-green-500 to-green-700 shadow-lg hover:from-green-600 hover:to-green-800 hover:shadow-xl transition-all duration-300 ease-in-out"
             onClick={handleNext}
           >
-            <FontAwesomeIcon icon={faChevronRight} className="text-white" />
+            <FontAwesomeIcon
+              icon={faChevronRight}
+              className="text-white text-lg"
+            />
           </button>
         </div>
       </div>
