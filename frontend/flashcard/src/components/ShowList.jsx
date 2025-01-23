@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDatabaseStore } from "../../../../backend/databaseStore"; // Import Zustand store
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const ShowList = () => {
@@ -22,6 +22,16 @@ const ShowList = () => {
     <div className="p-6">
       <div className="flex justify-between mb-4">
         <h1 className="text-2xl font-bold mb-4">Vocabulary List</h1>
+        <div className="">
+          <input
+            value="Search"
+            placeholder="Search"
+            className="p-2 border h-12 w-54"
+          ></input>
+          <span className="">
+            <FontAwesomeIcon icon={faSearch} />
+          </span>
+        </div>
         <button
           className="bg-blue-600 text-white p-3 border rounded-lg"
           onClick={previousPage}

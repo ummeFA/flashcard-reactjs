@@ -63,18 +63,18 @@ const Card = () => {
         >
           {/* Front */}
           <div
-            className={`absolute w-full h-full bg-blue-300 border rounded-lg flex items-center justify-center`}
+            className={`absolute w-full h-full bg-slate-600 border rounded-lg flex items-center justify-center`}
             style={{
               backfaceVisibility: "hidden",
             }}
           >
-            <h5 className="text-2xl font-semibold text-red">
+            <h5 className="text-2xl font-semibold text-white">
               {currentCard.kanji}{" "}
             </h5>
           </div>
           {/* Back */}
           <div
-            className={`absolute w-full h-full bg-blue-600 border rounded-lg flex items-center justify-center`}
+            className={`absolute w-full h-full bg-slate-600 border rounded-lg flex items-center justify-center`}
             style={{
               backfaceVisibility: "hidden",
               transform: "rotateY(180deg)",
