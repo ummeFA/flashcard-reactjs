@@ -53,37 +53,39 @@ const ShowList = () => {
     <div className="p-6">
       <div className="flex justify-between mb-4">
         <h1 className="text-2xl font-bold mb-4">Vocabulary List</h1>
-        <div className="flex flex-row">
+        <div className="relative">
           <input
-            value="Search"
-            placeholder="Search"
-            className="p-2 border border-b-slate-800 h-12 w-54"
+            value=""
+            placeholder=""
+            className="p-2 pl-10 border border-b-slate-800 h-12 w-54 rounded-md"
           ></input>
-          <span className="">
-            <FontAwesomeIcon icon={faSearch} />
-          </span>
+
+          <FontAwesomeIcon
+            icon={faSearch}
+            className="absolute left-3 top-4 text-gray-500"
+          />
         </div>
-        <div className="">
+        <div className="flex flex-wrap gap-2">
           <button
-            className="bg-blue-600 text-white p-3 border rounded-lg border-black"
+            className="bg-blue-600 text-white font-bold p-3 border-2 rounded-lg border-black"
             onClick={previousPage}
           >
             <FontAwesomeIcon icon={faArrowLeft} className="mr-2" /> Back
           </button>
           <button
-            className="bg-green-600 text-white p-3 border rounded-lg border-black"
+            className="bg-green-900 text-white font-bold p-3 border-2 rounded-lg border-black"
             onClick={addVocabulary}
           >
             <FontAwesomeIcon icon={faAdd} className="mr-2" /> Add
           </button>
           <button
-            className="bg-orange-600 text-white p-3 border rounded-lg border-black"
+            className="bg-orange-600 text-white font-bold p-3 border-2 rounded-lg border-black"
             onClick={editVocabulary}
           >
             <FontAwesomeIcon icon={faPenToSquare} className="mr-2" /> Edit
           </button>
           <button
-            className="bg-red-600 text-white p-3 border rounded-lg border-black"
+            className="bg-red-600 text-white font-bold p-3 border-2 rounded-lg border-black"
             onClick={deleteVocabulary}
           >
             <FontAwesomeIcon icon={faTrash} className="mr-2" /> Delete

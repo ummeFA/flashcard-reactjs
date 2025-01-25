@@ -2,8 +2,10 @@ import { faChevronDown, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
@@ -14,13 +16,24 @@ const Navbar = () => {
     setIsDropdownOpen(false);
   };
 
+  // Navigate to card
+  const navigateToCard = () => {
+    navigate("/card");
+  };
+
   return (
     <div className="bg-gray-100 text-slate-600 fixed top-0 left-0 w-full z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="text-lg font-bold">
+          <div
+            className="text-lg font-bold no-underline text-slate-700 hover:cursor-pointer"
+            onClick={navigateToCard}
+          >
             {/* Logo */}
-            <Link to="/" className="no-underline text-white" />
+            {/* <Link
+              to="/"
+              className="no-underline text-white hover:cursor-pointer"
+            /> */}
             Flashcard
           </div>
 
@@ -45,7 +58,7 @@ const Navbar = () => {
                         Add new vocabulary
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link
                         to="/edit-vocabulary"
                         className="block px-4 py-2 text-gray-700 hover:bg-blue-100"
@@ -53,7 +66,7 @@ const Navbar = () => {
                       >
                         Edit vocabulary
                       </Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link
                         to="/show-list"
