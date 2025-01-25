@@ -7,6 +7,8 @@ import Menu from "./components/Menu";
 import ShowList from "./components/ShowList";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Login from "./components/Login";
+import EditVocabulary from "./components/EditVocabulary";
 
 function App() {
   return (
@@ -15,8 +17,10 @@ function App() {
       <ToastContainer />
       <div className="flex-1 overflow-y-auto pt-16">
         <Routes>
-          <Route path="/" element={<Card />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/card" element={<Card />} />
           <Route path="/add-vocabulary" element={<AddVocabulary />} />
+          <Route path="/edit-vocabulary" element={<EditVocabulary />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/show-list" element={<ShowList />} />
         </Routes>

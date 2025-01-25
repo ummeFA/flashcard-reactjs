@@ -63,7 +63,7 @@ const Card = () => {
         >
           {/* Front */}
           <div
-            className={`absolute w-full h-full bg-slate-600 border rounded-lg flex items-center justify-center`}
+            className={`absolute w-full h-full bg-emerald-600 border rounded-lg flex items-center justify-center`}
             style={{
               backfaceVisibility: "hidden",
             }}
@@ -74,7 +74,7 @@ const Card = () => {
           </div>
           {/* Back */}
           <div
-            className={`absolute w-full h-full bg-slate-600 border rounded-lg flex items-center justify-center`}
+            className={`absolute w-full h-full bg-emerald-600 border rounded-lg flex items-center justify-center`}
             style={{
               backfaceVisibility: "hidden",
               transform: "rotateY(180deg)",
@@ -91,7 +91,7 @@ const Card = () => {
         {/* Buttons */}
         <div className="flex justify-between space-x-4">
           <button
-            className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-r from-green-500 to-green-700 shadow-lg hover:from-green-600 hover:to-green-800 hover:shadow-xl transition-all duration-300 ease-in-out"
+            className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-r from-gray-500 to-gray-700 shadow-lg hover:from-gray-600 hover:to-gray-800 hover:shadow-xl transition-all duration-300 ease-in-out"
             onClick={handlePrevious}
           >
             <FontAwesomeIcon
@@ -100,7 +100,7 @@ const Card = () => {
             />
           </button>
           <button
-            className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-r from-green-500 to-green-700 shadow-lg hover:from-green-600 hover:to-green-800 hover:shadow-xl transition-all duration-300 ease-in-out"
+            className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-r from-gray-500 to-gray-700 shadow-lg hover:from-gray-600 hover:to-gray-800 hover:shadow-xl transition-all duration-300 ease-in-out"
             onClick={handleNext}
           >
             <FontAwesomeIcon

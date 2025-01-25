@@ -1,11 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDatabaseStore } from "../../../../backend/databaseStore"; // Import Zustand store
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faSearch } from "@fortawesome/free-solid-svg-icons";
-import { Navigate, useNavigate } from "react-router-dom";
+import {
+  faAdd,
+  faArrowLeft,
+  faPenToSquare,
+  faSearch,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 const ShowList = () => {
   const { data, isLoading, fetchData } = useDatabaseStore(); // Access Zustand store
+  const [selectedRow, setSelectedRow] = useState(null);
   const navigate = useNavigate();
 
   // Fetch data when the component mounts
@@ -18,26 +25,70 @@ const ShowList = () => {
     navigate(-1);
   };
 
+  // Navigate to add vocabulary component
+  const addVocabulary = () => {
+    navigate("/add-vocabulary");
+  };
+
+  // Edit a vocabulary
+  const editVocabulary = () => {
+    if (!selectedRow) {
+      alert("Select a row first.");
+      return;
+    }
+    navigate(`/edit-vocabulary/${selectedRow.id}`);
+  };
+
+  // Delete a vocabulary
+  const deleteVocabulary = () => {
+    alert("Are you sure you want to delete the selected vocabulary?");
+  };
+
+  // Handle row click
+  const handleRowClick = (item) => {
+    setSelectedRow(item);
+  };
+
   return (
     <div className="p-6">
       <div className="flex justify-between mb-4">
         <h1 className="text-2xl font-bold mb-4">Vocabulary List</h1>
-        <div className="">
+        <div className="flex flex-row">
           <input
             value="Search"
             placeholder="Search"
-            className="p-2 border h-12 w-54"
+            className="p-2 border border-b-slate-800 h-12 w-54"
           ></input>
           <span className="">
             <FontAwesomeIcon icon={faSearch} />
           </span>
         </div>
-        <button
-          className="bg-blue-600 text-white p-3 border rounded-lg"
-          onClick={previousPage}
-        >
-          <FontAwesomeIcon icon={faArrowLeft} className="mr-2" /> Back
-        </button>
+        <div className="">
+          <button
+            className="bg-blue-600 text-white p-3 border rounded-lg border-black"
+            onClick={previousPage}
+          >
+            <FontAwesomeIcon icon={faArrowLeft} className="mr-2" /> Back
+          </button>
+          <button
+            className="bg-green-600 text-white p-3 border rounded-lg border-black"
+            onClick={addVocabulary}
+          >
+            <FontAwesomeIcon icon={faAdd} className="mr-2" /> Add
+          </button>
+          <button
+            className="bg-orange-600 text-white p-3 border rounded-lg border-black"
+            onClick={editVocabulary}
+          >
+            <FontAwesomeIcon icon={faPenToSquare} className="mr-2" /> Edit
+          </button>
+          <button
+            className="bg-red-600 text-white p-3 border rounded-lg border-black"
+            onClick={deleteVocabulary}
+          >
+            <FontAwesomeIcon icon={faTrash} className="mr-2" /> Delete
+          </button>
+        </div>
       </div>
       {isLoading ? (
         <p className="text-gray-500">Loading...</p>
@@ -55,7 +106,13 @@ const ShowList = () => {
             <tbody>
               {data.length > 0 ? (
                 data.map((item) => (
-                  <tr key={item.id} className="hover:bg-gray-50">
+                  <tr
+                    key={item.id}
+                    className={`hover:bg-blue-100 cursor-pointer ${
+                      selectedRow?.id === item.id ? "bg-blue-200" : ""
+                    }`}
+                    onClick={handleRowClick}
+                  >
                     <td className="px-4 py-2 border-b">{item.id}</td>
                     <td className="px-4 py-2 border-b">{item.kanji}</td>
                     <td className="px-4 py-2 border-b">{item.hiragana}</td>
