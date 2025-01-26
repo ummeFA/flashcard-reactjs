@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Card from "../src/components/Card";
 import AddVocabulary from "./components/AddVocabulary";
 import Navbar from "./components/Navbar";
@@ -12,11 +12,22 @@ import EditVocabulary from "./components/EditVocabulary";
 import SignUp from "./components/SignUp";
 
 function App() {
+  const location = useLocation();
+
+  // Defining path where the navbar will be invisible
+  const navbarHide = ["/", "/sign-up"];
+
+  // Check if Navbar is visible
+  const isNavbarVisible = !navbarHide.includes(location.pathname);
+
   return (
     <div className="flex flex-col h-screen">
-      <Navbar />
+      {/* Only render navbar if the current path is not the navbarHide array*/}
+      {!navbarHide.includes(location.pathname) && <Navbar />}
       <ToastContainer />
-      <div className="flex-1 overflow-y-auto pt-16">
+      <div
+        className={`flex-1 overflow-y-auto ${isNavbarVisible ? "pt-16" : ""}`}
+      >
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/sign-up" element={<SignUp />} />
