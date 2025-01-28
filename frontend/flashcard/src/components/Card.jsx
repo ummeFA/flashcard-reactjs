@@ -1,12 +1,12 @@
 import {
-  faAdd,
+  // faAdd,
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDatabaseStore } from "../../../../backend/databaseStore";
+import { useDatabaseStore } from "../../../../backend/stores/databaseStore";
 
 const Card = () => {
   const navigate = useNavigate();
