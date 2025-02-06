@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Login = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-purple-300 border border-slate-600 rounded-md p-8 w-full max-w-md shadow-lg">
+      <div className="bg-purple-200  border rounded-md p-8 w-full max-w-md shadow-inner">
         <h1 className="text-3xl font-semibold text-center mb-6">Login</h1>
         <form action="">
           <div className="mb-4">

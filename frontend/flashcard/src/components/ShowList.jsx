@@ -36,7 +36,7 @@ const ShowList = () => {
       alert("Select a row first.");
       return;
     }
-    navigate(`/edit-vocabulary/${selectedRow.id}`);
+    navigate("/edit-vocabulary", { state: { vocabulary: selectedRow } });
   };
 
   // Delete a vocabulary
@@ -110,10 +110,12 @@ const ShowList = () => {
                 data.map((item) => (
                   <tr
                     key={item.id}
-                    className={`hover:bg-blue-100 cursor-pointer ${
-                      selectedRow?.id === item.id ? "bg-blue-200" : ""
+                    className={`cursor-pointer ${
+                      selectedRow?.id === item.id
+                        ? "bg-blue-400"
+                        : "hover:bg-blue-100"
                     }`}
-                    onClick={handleRowClick}
+                    onClick={() => handleRowClick(item)}
                   >
                     <td className="px-4 py-2 border-b">{item.id}</td>
                     <td className="px-4 py-2 border-b">{item.kanji}</td>
