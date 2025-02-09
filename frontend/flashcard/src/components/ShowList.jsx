@@ -159,7 +159,9 @@ const ShowList = () => {
           </table>
         </div>
       )}
-      {isModalOpen && <DeleteModal onCancel={closeDeleteModal} />}
+      {isModalOpen && (
+        <DeleteModal onCancel={closeDeleteModal} vocabulary={selectedRow} />
+      )}
     </div>
   );
 };
