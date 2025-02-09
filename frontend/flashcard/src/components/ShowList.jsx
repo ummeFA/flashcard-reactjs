@@ -81,7 +81,7 @@ const ShowList = () => {
         </div>
         <div className="flex flex-wrap gap-2">
           <button
-            className="bg-blue-600 text-white font-bold p-3 border-2 rounded-lg border-black"
+            className="bg-purple-600 text-white font-bold p-3 border-2 rounded-lg border-black"
             onClick={previousPage}
           >
             <FontAwesomeIcon icon={faArrowLeft} className="mr-2" /> Back
@@ -91,18 +91,6 @@ const ShowList = () => {
             onClick={addVocabulary}
           >
             <FontAwesomeIcon icon={faAdd} className="mr-2" /> Add
-          </button>
-          <button
-            className="bg-orange-600 text-white font-bold p-3 border-2 rounded-lg border-black"
-            onClick={editVocabulary}
-          >
-            <FontAwesomeIcon icon={faPenToSquare} className="mr-2" /> Edit
-          </button>
-          <button
-            className="bg-red-600 text-white font-bold p-3 border-2 rounded-lg border-black"
-            onClick={openDeleteModal}
-          >
-            <FontAwesomeIcon icon={faTrash} className="mr-2" /> Delete
           </button>
         </div>
       </div>
@@ -117,6 +105,7 @@ const ShowList = () => {
                 <th className="px-4 py-2 border-b">Kanji</th>
                 <th className="px-4 py-2 border-b">Hiragana</th>
                 <th className="px-4 py-2 border-b">English</th>
+                <th className="px-4 py-2 border-b text-center">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -126,7 +115,7 @@ const ShowList = () => {
                     key={item.id}
                     className={`cursor-pointer ${
                       selectedRow?.id === item.id
-                        ? "bg-blue-400"
+                        ? "bg-blue-300"
                         : "hover:bg-blue-100"
                     }`}
                     onClick={() => handleRowClick(item)}
@@ -135,6 +124,25 @@ const ShowList = () => {
                     <td className="px-4 py-2 border-b">{item.kanji}</td>
                     <td className="px-4 py-2 border-b">{item.hiragana}</td>
                     <td className="px-4 py-2 border-b">{item.english}</td>
+                    <td className="px-4 py-2 border-b flex justify-center gap-2">
+                      <button
+                        className="bg-orange-600 text-white font-bold p-3 border-2 rounded-lg border-black"
+                        onClick={editVocabulary}
+                      >
+                        <FontAwesomeIcon
+                          icon={faPenToSquare}
+                          className="mr-2"
+                        />{" "}
+                        Edit
+                      </button>
+                      <button
+                        className="bg-red-600 text-white font-bold p-3 border-2 rounded-lg border-black"
+                        onClick={openDeleteModal}
+                      >
+                        <FontAwesomeIcon icon={faTrash} className="mr-2" />{" "}
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))
               ) : (
