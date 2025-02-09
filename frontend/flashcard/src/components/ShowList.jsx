@@ -9,16 +9,18 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import DeleteModal from "./DeleteModal";
 
 const ShowList = () => {
   const { data, isLoading, fetchData } = useDatabaseStore(); // Access Zustand store
   const [selectedRow, setSelectedRow] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   // Fetch data when the component mounts
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, []);
 
   // Back to previous page
   const previousPage = () => {
@@ -39,13 +41,25 @@ const ShowList = () => {
     navigate("/edit-vocabulary", { state: { vocabulary: selectedRow } });
   };
 
-  // Delete a vocabulary
-  const deleteVocabulary = () => {
-    alert("Are you sure you want to delete the selected vocabulary?");
+  // Open Delete modal when delete button is pressed
+  const openDeleteModal = () => {
+    if (!selectedRow) {
+      alert("Select a row first");
+      return;
+    }
+    console.log("Opening Delete Modal for:", selectedRow); // ✅ Debugging line
+
+    setIsModalOpen(true);
+  };
+
+  // Close delete modal
+  const closeDeleteModal = () => {
+    setIsModalOpen(false);
   };
 
   // Handle row click
   const handleRowClick = (item) => {
+    console.log("row selected ", item);
     setSelectedRow(item);
   };
 
@@ -86,7 +100,7 @@ const ShowList = () => {
           </button>
           <button
             className="bg-red-600 text-white font-bold p-3 border-2 rounded-lg border-black"
-            onClick={deleteVocabulary}
+            onClick={openDeleteModal}
           >
             <FontAwesomeIcon icon={faTrash} className="mr-2" /> Delete
           </button>
@@ -137,6 +151,7 @@ const ShowList = () => {
           </table>
         </div>
       )}
+      {isModalOpen && <DeleteModal onCancel={closeDeleteModal} />}
     </div>
   );
 };

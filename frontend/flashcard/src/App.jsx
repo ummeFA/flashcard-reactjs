@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Login from "./components/Login";
 import EditVocabulary from "./components/EditVocabulary";
 import SignUp from "./components/SignUp";
+import DeleteModal from "./components/DeleteModal";
 
 function App() {
   const location = useLocation();
@@ -36,6 +37,7 @@ function App() {
           <Route path="/edit-vocabulary" element={<EditVocabulary />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/show-list" element={<ShowList />} />
+          <Route path="/delete" element={<DeleteModal />} />
         </Routes>
       </div>
     </div>
