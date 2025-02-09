@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronCircleLeft,
   faFloppyDisk,
 } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { useDatabaseStore } from "../../../../backend/stores/databaseStore";
 
 const EditVocabulary = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const vocabulary = location.state?.vocabulary;
+  const { updateVocabulary } = useDatabaseStore();
 
   if (!vocabulary) {
     return <p className="text-red-600"> No vocabulary found.</p>;
@@ -28,6 +29,12 @@ const EditVocabulary = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Handle save
+  const handleSave = () => {
+    updateVocabulary(vocabulary.id, formData);
+    navigate("/show-list");
+  };
+
   // Go to previous page
   const previousPage = () => {
     navigate("/show-list");
@@ -43,21 +50,21 @@ const EditVocabulary = () => {
             type="text"
             name="kanji"
             onChange={handleChange}
-            value={vocabulary.kanji}
+            value={formData.kanji}
             className="border border-black rounded p-3 mb-3"
           />
           <input
             type="text"
             name="hiragana"
             onChange={handleChange}
-            value={vocabulary.hiragana}
+            value={formData.hiragana}
             className="border border-black rounded p-3 mb-3"
           />
           <input
             type="text"
             name="english"
             onChange={handleChange}
-            value={vocabulary.english}
+            value={formData.english}
             className="border border-black rounded p-3 mb-3"
           />
         </div>
@@ -65,7 +72,7 @@ const EditVocabulary = () => {
         <div className="flex flex-col md:flex-row justify-center items-center gap-3 mt-5 w-2/3">
           <button
             className="bg-green-600 text-white flex items-center justify-center p-3 border rounded-lg w-full md:w-1/2 hover:bg-green-800"
-            // onClick={handleSave}
+            onClick={handleSave}
           >
             <FontAwesomeIcon
               icon={faFloppyDisk}
