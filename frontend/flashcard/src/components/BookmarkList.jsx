@@ -1,69 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useDatabaseStore } from "../../../../backend/stores/databaseStore"; // Import Zustand store
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAdd,
-  faArrowLeft,
-  faPenToSquare,
-  faSearch,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
-import DeleteModal from "./DeleteModal";
 
-const ShowList = () => {
-  const { data, isLoading, fetchData } = useDatabaseStore(); // Access Zustand store
-  const [selectedRow, setSelectedRow] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const navigate = useNavigate();
-
-  // Fetch data when the component mounts
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  // Back to previous page
-  const previousPage = () => {
-    navigate(-1);
-  };
-
-  // Navigate to add vocabulary component
-  const addVocabulary = () => {
-    navigate("/add-vocabulary");
-  };
-
-  // Edit a vocabulary
-  const editVocabulary = () => {
-    if (!selectedRow) {
-      alert("Select a row first.");
-      return;
-    }
-    navigate("/edit-vocabulary", { state: { vocabulary: selectedRow } });
-  };
-
-  // Open Delete modal when delete button is pressed
-  const openDeleteModal = () => {
-    if (!selectedRow) {
-      alert("Select a row first");
-      return;
-    }
-    console.log("Opening Delete Modal for:", selectedRow); // ✅ Debugging line
-
-    setIsModalOpen(true);
-  };
-
-  // Close delete modal
-  const closeDeleteModal = () => {
-    setIsModalOpen(false);
-  };
-
-  // Handle row click
-  const handleRowClick = (item) => {
-    console.log("row selected ", item);
-    setSelectedRow(item);
-  };
-
+const BookmarkList = () => {
   return (
     <div className="p-6">
       <div className="flex justify-between mb-4">
@@ -83,13 +21,13 @@ const ShowList = () => {
         <div className="flex flex-wrap gap-2">
           <button
             className="bg-purple-600 text-white font-bold p-3 border-2 rounded-lg border-black"
-            onClick={previousPage}
+            // onClick={previousPage}
           >
             <FontAwesomeIcon icon={faArrowLeft} className="mr-2" /> Back
           </button>
           <button
             className="bg-green-900 text-white font-bold p-3 border-2 rounded-lg border-black"
-            onClick={addVocabulary}
+            // onClick={addVocabulary}
           >
             <FontAwesomeIcon icon={faAdd} className="mr-2" /> Add
           </button>
@@ -128,7 +66,7 @@ const ShowList = () => {
                     <td className="px-4 py-2 border-b flex justify-center gap-2">
                       <button
                         className="bg-orange-600 text-white font-bold p-3 border-2 rounded-lg border-black"
-                        onClick={editVocabulary}
+                        // onClick={editVocabulary}
                       >
                         <FontAwesomeIcon
                           icon={faPenToSquare}
@@ -138,7 +76,7 @@ const ShowList = () => {
                       </button>
                       <button
                         className="bg-red-600 text-white font-bold p-3 border-2 rounded-lg border-black"
-                        onClick={openDeleteModal}
+                        // onClick={openDeleteModal}
                       >
                         <FontAwesomeIcon icon={faTrash} className="mr-2" />{" "}
                         Delete
@@ -160,11 +98,8 @@ const ShowList = () => {
           </table>
         </div>
       )}
-      {isModalOpen && (
-        <DeleteModal onCancel={closeDeleteModal} vocabulary={selectedRow} />
-      )}
     </div>
   );
 };
 
-export default ShowList;
+export default BookmarkList;

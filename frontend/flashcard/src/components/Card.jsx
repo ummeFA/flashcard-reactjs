@@ -2,19 +2,21 @@ import {
   // faAdd,
   faChevronLeft,
   faChevronRight,
+  faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDatabaseStore } from "../../../../backend/stores/databaseStore";
 
-const Card = () => {
+const Card = ({ onBookmarkUpdate }) => {
   const navigate = useNavigate();
   const { data, fetchData, isLoading } = useDatabaseStore();
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const [isFlipped, setIsFlipped] = useState(false);
+  const [bookmarkedItems, setBookmarkedItems] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -22,11 +24,6 @@ const Card = () => {
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
-  };
-
-  // Navigate to new add-vocabulary component
-  const addVocabulary = () => {
-    navigate("add-vocabulary");
   };
 
   const handleNext = () => {
@@ -39,6 +36,24 @@ const Card = () => {
       prevIndex > 0 ? prevIndex - 1 : data.length - 1
     );
   };
+  const handleBookmark = (e) => {
+    e.stopPropagation();
+    const currentCard = data[currentIndex];
+    setBookmarkedItems((prev) => {
+      const isAlreadyBookmarked = prev.some(
+        (item) => item.id === currentCard.id
+      );
+      if (isAlreadyBookmarked) {
+        return prev.filter((item) => item.id !== currentCard.id); // Remove if already bookmarked
+      }
+      return [...prev, currentCard]; // Add new bookmark
+    });
+
+    // Pass data to parent component or global state
+    if (onBookmarkUpdate) {
+      onBookmarkUpdate(updatedBookmarked);
+    }
+  };
 
   if (isLoading) {
     return <div className="">Loading...</div>;
@@ -49,6 +64,9 @@ const Card = () => {
   }
 
   const currentCard = data[currentIndex];
+  const isBookmarked = bookmarkedItems.some(
+    (item) => item.id === currentCard.id
+  );
 
   return (
     <div className="flex items-center justify-center w-full h-screen">
@@ -61,6 +79,19 @@ const Card = () => {
           }}
           onClick={handleFlip}
         >
+          {/* Star Icon for Bookmark */}
+          <button
+            onClick={handleBookmark}
+            className="absolute top-3 right-3 z-10 p-2 rounded-full"
+          >
+            <FontAwesomeIcon
+              icon={faStar}
+              className={`text-3xl ${
+                isBookmarked ? "text-yellow-400" : "text-gray-100"
+              }`}
+            />
+          </button>
+
           {/* Front */}
           <div
             className={`absolute w-full h-full bg-emerald-600 border rounded-lg flex items-center justify-center`}
@@ -88,6 +119,7 @@ const Card = () => {
             </div>
           </div>
         </div>
+
         {/* Buttons */}
         <div className="flex justify-between space-x-4">
           <button

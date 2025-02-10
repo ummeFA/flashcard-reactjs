@@ -52,7 +52,7 @@ const Navbar = () => {
                     <li>
                       <Link
                         to="/add-vocabulary"
-                        className="block px-4 py-2 text-gray-700 hover:bg-blue-100"
+                        className="block p-4 text-gray-700 hover:bg-blue-100"
                         onClick={closeDropdown} // Close dropdown on click
                       >
                         Add new vocabulary
@@ -70,10 +70,19 @@ const Navbar = () => {
                     <li>
                       <Link
                         to="/show-list"
-                        className="block px-4 py-2 text-gray-700 hover:bg-blue-100"
+                        className="block p-4 text-gray-700 hover:bg-blue-100"
                         onClick={closeDropdown} // Close dropdown on click
                       >
                         Show list
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/bookmarkList"
+                        className="block p-4 text-gray-700 hover:bg-blue-100"
+                        onClick={closeDropdown} // Close dropdown on click
+                      >
+                        Show Bookmarked List
                       </Link>
                     </li>
                   </ul>
