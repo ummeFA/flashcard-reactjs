@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDatabaseStore } from "../../../../backend/stores/databaseStore"; // Import Zustand store
+import { useDatabaseStore } from "../../stores/databaseStore"; // Import Zustand store
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAdd,

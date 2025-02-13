@@ -7,7 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDatabaseStore } from "../../../../backend/stores/databaseStore";
+import { useDatabaseStore } from "../../stores/databaseStore";
 
 const Card = ({ onBookmarkUpdate }) => {
   const navigate = useNavigate();

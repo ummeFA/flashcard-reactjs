@@ -5,7 +5,7 @@ import {
   faChevronCircleLeft,
   faFloppyDisk,
 } from "@fortawesome/free-solid-svg-icons";
-import { useDatabaseStore } from "../../../../backend/stores/databaseStore";
+import { useDatabaseStore } from "../../stores/databaseStore";
 
 const EditVocabulary = () => {
   const navigate = useNavigate();

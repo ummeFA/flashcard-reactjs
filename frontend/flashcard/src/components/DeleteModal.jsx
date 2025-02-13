@@ -1,7 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBan, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useDatabaseStore } from "../../../../backend/stores/databaseStore";
+import { useDatabaseStore } from "../../stores/databaseStore";
 
 const DeleteModal = ({ onCancel, vocabulary }) => {
   const { deleteVocabulary } = useDatabaseStore();
