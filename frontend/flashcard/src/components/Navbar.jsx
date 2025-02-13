@@ -1,24 +1,22 @@
 import { faChevronDown, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useUserStore } from "../../stores/user"; // Import Zustand store
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const { logoutUser } = useUserStore(); // Get logout function from Zustand
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
   };
 
-  // Close the dropdown
-  const closeDropdown = () => {
-    setIsDropdownOpen(false);
-  };
-
-  // Navigate to card
-  const navigateToCard = () => {
-    navigate("/card");
+  // ✅ Logout Function: Calls Zustand store and redirects to login
+  const handleLogout = () => {
+    logoutUser();
+    navigate("/"); // Redirect to login page
   };
 
   return (
@@ -27,13 +25,8 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           <div
             className="text-lg font-bold no-underline text-slate-700 hover:cursor-pointer"
-            onClick={navigateToCard}
+            onClick={() => navigate("/card")}
           >
-            {/* Logo */}
-            {/* <Link
-              to="/"
-              className="no-underline text-white hover:cursor-pointer"
-            /> */}
             Flashcard
           </div>
 
@@ -53,25 +46,16 @@ const Navbar = () => {
                       <Link
                         to="/add-vocabulary"
                         className="block p-4 text-gray-700 hover:bg-blue-100"
-                        onClick={closeDropdown} // Close dropdown on click
+                        onClick={() => setIsDropdownOpen(false)}
                       >
                         Add new vocabulary
                       </Link>
                     </li>
-                    {/* <li>
-                      <Link
-                        to="/edit-vocabulary"
-                        className="block px-4 py-2 text-gray-700 hover:bg-blue-100"
-                        onClick={closeDropdown} // Close dropdown on click
-                      >
-                        Edit vocabulary
-                      </Link>
-                    </li> */}
                     <li>
                       <Link
                         to="/show-list"
                         className="block p-4 text-gray-700 hover:bg-blue-100"
-                        onClick={closeDropdown} // Close dropdown on click
+                        onClick={() => setIsDropdownOpen(false)}
                       >
                         Show list
                       </Link>
@@ -80,7 +64,7 @@ const Navbar = () => {
                       <Link
                         to="/bookmarkList"
                         className="block p-4 text-gray-700 hover:bg-blue-100"
-                        onClick={closeDropdown} // Close dropdown on click
+                        onClick={() => setIsDropdownOpen(false)}
                       >
                         Show Bookmarked List
                       </Link>
@@ -89,11 +73,15 @@ const Navbar = () => {
                 </div>
               )}
             </div>
-            <Link
-              to="/logout"
-              className="flex items-center space-x-2 no-underline text-white"
-            />
-            <span>Logout</span> <FontAwesomeIcon icon={faUser} />
+
+            {/* ✅ Logout Button */}
+            <button
+              onClick={handleLogout}
+              className="flex items-center space-x-2 text-slate-700 hover:text-blue-600 transition duration-200"
+            >
+              <span>Logout</span>
+              <FontAwesomeIcon icon={faUser} />
+            </button>
           </div>
         </div>
       </div>
