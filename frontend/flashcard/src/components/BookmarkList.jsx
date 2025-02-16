@@ -1,49 +1,93 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faAdd,
   faArrowLeft,
+  faPenToSquare,
   faSearch,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { useBookmarkStore } from "../../stores/bookmarkStore";
 
 const BookmarkList = () => {
   const navigate = useNavigate();
+  const { bookmarkedItems } = useBookmarkStore(); // Get bookmarked data
+
   const previousPage = () => {
     navigate("/card");
   };
 
+  const handleEdit = (vocabulary) => {
+    navigate("/edit-vocabulary", { state: { vocabulary } }); // ✅ Send vocabulary data
+  };
+
   return (
     <div className="p-6">
-      <div className="flex justify-between mb-4">
-        <h1 className="text-2xl font-bold mb-4">Bookmarked List</h1>
+      {/* Header */}
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold">
+          Bookmarked List{" "}
+          <span className="text-gray-600 text-lg">
+            ({bookmarkedItems.length} items)
+          </span>
+        </h1>
         <div className="relative">
           <input
-            value=""
             placeholder="Search by Kanji or Hiragana"
             className="p-2 pl-10 border border-b-slate-800 h-12 w-72 rounded-md"
-          ></input>
-
+          />
           <FontAwesomeIcon
             icon={faSearch}
             className="absolute left-3 top-4 text-gray-500"
           />
         </div>
-        <div className="flex flex-wrap gap-2">
-          <button
-            className="bg-purple-600 text-white font-bold p-3 border-2 rounded-lg border-black"
-            onClick={previousPage}
-          >
-            <FontAwesomeIcon icon={faArrowLeft} className="mr-2" /> Back
-          </button>
-          {/* <button
-            className="bg-green-900 text-white font-bold p-3 border-2 rounded-lg border-black"
-            // onClick={addVocabulary}
-          >
-            <FontAwesomeIcon icon={faAdd} className="mr-2" /> Add
-          </button> */}
-        </div>
+        <button
+          className="bg-purple-600 text-white font-bold p-3 border-2 rounded-lg border-black"
+          onClick={previousPage}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} className="mr-2" /> Back
+        </button>
       </div>
+
+      {/* Show bookmarked items in a list */}
+      {bookmarkedItems.length === 0 ? (
+        <p className="text-gray-500 text-lg">No bookmarks yet.</p>
+      ) : (
+        <ul className="w-full border border-gray-300 rounded-md shadow-md hover:cursor-pointer">
+          {bookmarkedItems.map((card) => (
+            <li
+              key={card.id}
+              className="p-4 border-b border-gray-300 flex items-center justify-between bg-white hover:bg-gray-100 transition"
+            >
+              {/* Card Data */}
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  {card.kanji}
+                </h3>
+                <p className="text-gray-700">
+                  {card.hiragana} - {card.english}
+                </p>
+              </div>
+
+              {/* Buttons (aligned to right) */}
+              <div className="flex gap-4 ml-auto">
+                <button className="p-2" onClick={() => handleEdit(card)}>
+                  <FontAwesomeIcon
+                    icon={faPenToSquare}
+                    className="text-orange-600 text-lg"
+                  />
+                </button>
+                <button className="p-2">
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    className="text-red-500 text-lg"
+                  />
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

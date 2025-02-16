@@ -37,7 +37,7 @@ const EditVocabulary = () => {
 
   // Go to previous page
   const previousPage = () => {
-    navigate("/show-list");
+    navigate(-1);
   };
 
   return (
