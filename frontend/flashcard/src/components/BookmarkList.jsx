@@ -1,11 +1,22 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faAdd,
+  faArrowLeft,
+  faSearch,
+} from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 const BookmarkList = () => {
+  const navigate = useNavigate();
+  const previousPage = () => {
+    navigate("/card");
+  };
+
   return (
     <div className="p-6">
       <div className="flex justify-between mb-4">
-        <h1 className="text-2xl font-bold mb-4">Vocabulary List</h1>
+        <h1 className="text-2xl font-bold mb-4">Bookmarked List</h1>
         <div className="relative">
           <input
             value=""
@@ -21,83 +32,18 @@ const BookmarkList = () => {
         <div className="flex flex-wrap gap-2">
           <button
             className="bg-purple-600 text-white font-bold p-3 border-2 rounded-lg border-black"
-            // onClick={previousPage}
+            onClick={previousPage}
           >
             <FontAwesomeIcon icon={faArrowLeft} className="mr-2" /> Back
           </button>
-          <button
+          {/* <button
             className="bg-green-900 text-white font-bold p-3 border-2 rounded-lg border-black"
             // onClick={addVocabulary}
           >
             <FontAwesomeIcon icon={faAdd} className="mr-2" /> Add
-          </button>
+          </button> */}
         </div>
       </div>
-      {isLoading ? (
-        <p className="text-gray-500">Loading...</p>
-      ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-300 text-left">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="px-4 py-2 border-b">ID</th>
-                <th className="px-4 py-2 border-b">Kanji</th>
-                <th className="px-4 py-2 border-b">Hiragana</th>
-                <th className="px-4 py-2 border-b">English</th>
-                <th className="px-4 py-2 border-b text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.length > 0 ? (
-                data.map((item) => (
-                  <tr
-                    key={item.id}
-                    className={`cursor-pointer ${
-                      selectedRow?.id === item.id
-                        ? "bg-blue-300"
-                        : "hover:bg-blue-100"
-                    }`}
-                    onClick={() => handleRowClick(item)}
-                  >
-                    <td className="px-4 py-2 border-b">{item.id}</td>
-                    <td className="px-4 py-2 border-b">{item.kanji}</td>
-                    <td className="px-4 py-2 border-b">{item.hiragana}</td>
-                    <td className="px-4 py-2 border-b">{item.english}</td>
-                    <td className="px-4 py-2 border-b flex justify-center gap-2">
-                      <button
-                        className="bg-orange-600 text-white font-bold p-3 border-2 rounded-lg border-black"
-                        // onClick={editVocabulary}
-                      >
-                        <FontAwesomeIcon
-                          icon={faPenToSquare}
-                          className="mr-2"
-                        />{" "}
-                        Edit
-                      </button>
-                      <button
-                        className="bg-red-600 text-white font-bold p-3 border-2 rounded-lg border-black"
-                        // onClick={openDeleteModal}
-                      >
-                        <FontAwesomeIcon icon={faTrash} className="mr-2" />{" "}
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td
-                    colSpan="4"
-                    className="px-4 py-2 text-center text-gray-500"
-                  >
-                    No vocabulary found
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      )}
     </div>
   );
 };

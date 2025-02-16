@@ -1,22 +1,19 @@
 import {
-  // faAdd,
   faChevronLeft,
   faChevronRight,
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useDatabaseStore } from "../../stores/databaseStore";
+import { useBookmarkStore } from "../../stores/bookmarkStore"; // ✅ Import Bookmark Store
 
-const Card = ({ onBookmarkUpdate }) => {
-  const navigate = useNavigate();
+const Card = () => {
   const { data, fetchData, isLoading } = useDatabaseStore();
+  const { bookmarkedItems, toggleBookmark } = useBookmarkStore(); // ✅ Zustand store
 
   const [currentIndex, setCurrentIndex] = useState(0);
-
   const [isFlipped, setIsFlipped] = useState(false);
-  const [bookmarkedItems, setBookmarkedItems] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -31,37 +28,20 @@ const Card = ({ onBookmarkUpdate }) => {
       prevIndex < data.length - 1 ? prevIndex + 1 : 0
     );
   };
+
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) =>
       prevIndex > 0 ? prevIndex - 1 : data.length - 1
     );
   };
-  const handleBookmark = (e) => {
-    e.stopPropagation();
-    const currentCard = data[currentIndex];
-    setBookmarkedItems((prev) => {
-      const isAlreadyBookmarked = prev.some(
-        (item) => item.id === currentCard.id
-      );
-      if (isAlreadyBookmarked) {
-        return prev.filter((item) => item.id !== currentCard.id); // Remove if already bookmarked
-      }
-      return [...prev, currentCard]; // Add new bookmark
-    });
 
-    // Pass data to parent component or global state
-    if (onBookmarkUpdate) {
-      onBookmarkUpdate(updatedBookmarked);
-    }
+  const handleBookmark = (e) => {
+    e.stopPropagation(); // Prevents card flip on click
+    toggleBookmark(data[currentIndex]); // ✅ Toggle bookmark
   };
 
-  if (isLoading) {
-    return <div className="">Loading...</div>;
-  }
-
-  if (data.length === 0) {
-    return <div className="">No data available</div>;
-  }
+  if (isLoading) return <div>Loading...</div>;
+  if (data.length === 0) return <div>No data available</div>;
 
   const currentCard = data[currentIndex];
   const isBookmarked = bookmarkedItems.some(
@@ -70,16 +50,16 @@ const Card = ({ onBookmarkUpdate }) => {
 
   return (
     <div className="flex items-center justify-center w-full h-screen">
-      <div className="space-y-4 ">
+      <div className="space-y-4">
         <div
-          className={`relative w-96 h-64 cursor-pointer transform transition-transform duration-500`}
+          className="relative w-96 h-64 cursor-pointer transform transition-transform duration-500"
           style={{
             transformStyle: "preserve-3d",
             transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
           }}
           onClick={handleFlip}
         >
-          {/* Star Icon for Bookmark */}
+          {/* ⭐ Bookmark Button */}
           <button
             onClick={handleBookmark}
             className="absolute top-3 right-3 z-10 p-2 rounded-full"
@@ -94,18 +74,17 @@ const Card = ({ onBookmarkUpdate }) => {
 
           {/* Front */}
           <div
-            className={`absolute w-full h-full bg-emerald-600 border rounded-lg flex items-center justify-center`}
-            style={{
-              backfaceVisibility: "hidden",
-            }}
+            className="absolute w-full h-full bg-emerald-600 border rounded-lg flex items-center justify-center"
+            style={{ backfaceVisibility: "hidden" }}
           >
             <h5 className="text-2xl font-semibold text-white">
-              {currentCard.kanji}{" "}
+              {currentCard.kanji}
             </h5>
           </div>
+
           {/* Back */}
           <div
-            className={`absolute w-full h-full bg-emerald-600 border rounded-lg flex items-center justify-center`}
+            className="absolute w-full h-full bg-emerald-600 border rounded-lg flex items-center justify-center"
             style={{
               backfaceVisibility: "hidden",
               transform: "rotateY(180deg)",
@@ -113,18 +92,18 @@ const Card = ({ onBookmarkUpdate }) => {
           >
             <div className="flex flex-col justify-center">
               <h5 className="text-3xl font-bold text-white">
-                {currentCard.hiragana}{" "}
+                {currentCard.hiragana}
               </h5>
-              <p className=" text-white pt-5">{currentCard.english}</p>
+              <p className="text-white pt-5">{currentCard.english}</p>
             </div>
           </div>
         </div>
 
-        {/* Buttons */}
+        {/* Navigation Buttons */}
         <div className="flex justify-between space-x-4">
           <button
-            className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-r from-gray-500 to-gray-700 shadow-lg hover:from-gray-600 hover:to-gray-800 hover:shadow-xl transition-all duration-300 ease-in-out"
             onClick={handlePrevious}
+            className="w-12 h-12 flex items-center justify-center rounded-full bg-gray-600 hover:bg-gray-800 shadow-lg transition"
           >
             <FontAwesomeIcon
               icon={faChevronLeft}
@@ -132,8 +111,8 @@ const Card = ({ onBookmarkUpdate }) => {
             />
           </button>
           <button
-            className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-r from-gray-500 to-gray-700 shadow-lg hover:from-gray-600 hover:to-gray-800 hover:shadow-xl transition-all duration-300 ease-in-out"
             onClick={handleNext}
+            className="w-12 h-12 flex items-center justify-center rounded-full bg-gray-600 hover:bg-gray-800 shadow-lg transition"
           >
             <FontAwesomeIcon
               icon={faChevronRight}

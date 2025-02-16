@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useUserStore } from "../../stores/user"; // Import Zustand store
 import { useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
-  const { loginUser, loading } = useUserStore(); // Zustand state
+  const { loginUser } = useUserStore(); // Only using loginUser now
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -16,9 +16,29 @@ const Login = () => {
 
     const success = await loginUser(email, password);
     if (success) {
+      sessionStorage.setItem("isAuthenticated", "true"); // Store login state
       navigate("/card"); // Redirect to dashboard after successful login
     }
   };
+
+  useEffect(() => {
+    const handleBackButton = () => {
+      if (sessionStorage.getItem("isAuthenticated") === "true") {
+        sessionStorage.removeItem("isAuthenticated"); // Remove login state
+        toast.warning("Enter Login information.", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+        navigate("/", { replace: true }); // Redirect to login page
+      }
+    };
+
+    window.addEventListener("popstate", handleBackButton);
+
+    return () => {
+      window.removeEventListener("popstate", handleBackButton);
+    };
+  }, [navigate]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -53,10 +73,9 @@ const Login = () => {
 
           <button
             type="submit"
-            disabled={loading}
             className="w-full text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center"
           >
-            {loading ? "Logging in..." : "Login"}
+            Login
           </button>
 
           <div className="mt-4 text-center">
