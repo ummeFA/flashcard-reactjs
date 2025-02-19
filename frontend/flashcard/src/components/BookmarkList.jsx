@@ -7,18 +7,27 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { useBookmarkStore } from "../../stores/bookmarkStore";
+import { useBookmarkStore } from "../../stores/bookmarkStore"; // ✅ Import store
 
 const BookmarkList = () => {
   const navigate = useNavigate();
-  const { bookmarkedItems } = useBookmarkStore(); // Get bookmarked data
+  const { bookmarkedItems, removeBookmark } = useBookmarkStore(); // ✅ Correctly extract removeBookmark
 
   const previousPage = () => {
     navigate("/card");
   };
 
   const handleEdit = (vocabulary) => {
-    navigate("/edit-vocabulary", { state: { vocabulary } }); // ✅ Send vocabulary data
+    navigate("/edit-vocabulary", { state: { vocabulary } });
+  };
+
+  const handleDelete = (id) => {
+    console.log("Removing bookmark with ID:", id); // ✅ Debugging log
+    if (removeBookmark) {
+      removeBookmark(id); // ✅ Ensure function exists before calling
+    } else {
+      console.error("removeBookmark is undefined"); // ✅ Debugging log
+    }
   };
 
   return (
@@ -64,7 +73,7 @@ const BookmarkList = () => {
                 <h3 className="text-lg font-semibold text-gray-900">
                   {card.kanji}
                 </h3>
-                <p className="text-gray-700">
+                <p className="text-gray-700 pt-3">
                   {card.hiragana} - {card.english}
                 </p>
               </div>
@@ -77,7 +86,7 @@ const BookmarkList = () => {
                     className="text-orange-600 text-lg"
                   />
                 </button>
-                <button className="p-2">
+                <button className="p-2" onClick={() => handleDelete(card.id)}>
                   <FontAwesomeIcon
                     icon={faTrash}
                     className="text-red-500 text-lg"
